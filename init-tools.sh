@@ -114,7 +114,7 @@ if [ ! -e $__INIT_TOOLS_DONE_MARKER ]; then
         echo "Restoring BuildTools version $__BUILD_TOOLS_PACKAGE_VERSION..."
         echo "Running: $__DOTNET_CMD restore \"$__PROJECT_JSON_FILE\" --no-cache --packages $__PACKAGES_DIR --source $__BUILDTOOLS_SOURCE $__INIT_TOOLS_RESTORE_ARGS" >> $__init_tools_log
         $__DOTNET_CMD restore "$__PROJECT_JSON_FILE" --no-cache --packages $__PACKAGES_DIR --source $__BUILDTOOLS_SOURCE $__INIT_TOOLS_RESTORE_ARGS >> $__init_tools_log
-        if [ ! -e "$__BUILD_TOOLS_PATH/init-tools.sh" ]; then
+        if [ ! -e "$__BUILD_TOOLS_PATH/msbuild/init-tools.sh" ]; then
             echo "ERROR: Could not restore build tools correctly. See '$__init_tools_log' for more details." 1>&2
             echo "============= $__init_tools_log ==========="
             cat $__init_tools_log
@@ -123,8 +123,8 @@ if [ ! -e $__INIT_TOOLS_DONE_MARKER ]; then
     fi
 
     echo "Initializing BuildTools..."
-    echo "Running: $__BUILD_TOOLS_PATH/init-tools.sh $__scriptpath $__DOTNET_CMD $__TOOLRUNTIME_DIR" >> $__init_tools_log
-    $__BUILD_TOOLS_PATH/init-tools.sh $__scriptpath $__DOTNET_CMD $__TOOLRUNTIME_DIR >> $__init_tools_log
+    echo "Running: $__BUILD_TOOLS_PATH/msbuild/init-tools.sh $__scriptpath $__DOTNET_CMD $__TOOLRUNTIME_DIR" >> $__init_tools_log
+    $__BUILD_TOOLS_PATH/msbuild/init-tools.sh $__scriptpath $__DOTNET_CMD $__TOOLRUNTIME_DIR >> $__init_tools_log
     if [ "$?" != "0" ]; then
         echo "ERROR: An error occured when trying to initialize the tools. Please check '$__init_tools_log' for more details."1>&2
         exit 1
